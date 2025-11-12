@@ -1,0 +1,3 @@
+asyncpg
+py-cord
+asyncio

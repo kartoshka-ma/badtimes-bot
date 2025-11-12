@@ -1,0 +1,32 @@
+
+[2024-12-09 20:53:28] [+] Player (958077120612032612) - kartoshka_ma#0 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-09 20:53:28] [-] Player (958077120612032612) - kartoshka_ma#0 could not be added to the database by kartoshka_ma#0 (958077120612032612)! Reason: UNIQUE constraint failed: countries.user_id
+[2024-12-09 20:53:28] [+] Player (958077120612032612) - kartoshka_ma#0 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-09 20:53:28] [+] Player (958077120612032612) - kartoshka_ma#0 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-09 20:53:28] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kisototakijama#0 (826439670161473537)!
+[2024-12-11 21:06:17] [+] Player (733408605956472853) - stonesssssss#0 was added to the database by stonesssssss#0 (733408605956472853)!
+[2024-12-17 22:38:28] [+] Player (1206660906621341737) - Bad Times Bot#4037 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-17 22:42:40] [+] Player (1206660906621341737) - Bad Times Bot#4037 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-17 22:42:40] [+] Player (1206660906621341737) - Bad Times Bot#4037 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-17 22:42:40] [+] Player (1206660906621341737) - Bad Times Bot#4037 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2024-12-19 23:51:44] [-] Player (1206660906621341737) - Bad Times Bot#4037 could not be deleted from the database by kartoshka_ma#0 (958077120612032612)! Reason: Something went wrong! Check the datebase or request
+[2024-12-19 23:56:07] [-] Player (1206660906621341737) - Bad Times Bot#4037 could not be deleted from the database by kartoshka_ma#0 (958077120612032612)! Reason: Something went wrong! Check the datebase or request
+[2025-01-24 11:13:08] [-] Player (826439670161473537) - kisototakijama#0 could not be added to the database by kisototakijama#0 (826439670161473537)! Reason: UNIQUE constraint failed: countries.user_id
+[2025-01-24 11:13:08] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kisototakijama#0 (826439670161473537)!
+[2025-01-24 11:13:08] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2025-03-14 18:35:51] [+] Player (767021781910421555) - nikitadavin#0 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2025-03-14 18:35:51] [+] Player (733408605956472853) - b1rdsssss#0 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2025-03-14 18:35:51] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2025-06-01 19:42:30] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kisototakijama#0 (826439670161473537)!
+[2025-06-03 17:29:19] [+] Player (733408605956472853) - b1rdsssss#0 was added to the database by b1rdsssss#0 (733408605956472853)!
+[2025-06-20 22:06:58] [-] Player (826439670161473537) - kisototakijama#0 could not be added to the database by kisototakijama#0 (826439670161473537)! Reason: UNIQUE constraint failed: countries.user_id
+[2025-06-20 22:06:58] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kartoshka_ma#0 (958077120612032612)!
+[2025-06-20 22:06:58] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kartoshka_ma#0 (958077120612032612)!
+[2025-06-20 22:06:58] [-] Player (826439670161473537) - kisototakijama#0 could not be added to the database by kisototakijama#0 (826439670161473537)! Reason: UNIQUE constraint failed: countries.user_id
+[2025-07-14 20:13:28] [-] Player (826439670161473537) - kisototakijama#0 could not be added to the database by kisototakijama#0 (826439670161473537)! Reason: UNIQUE constraint failed: countries.user_id
+[2025-07-14 20:13:28] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kisototakijama#0 (826439670161473537)!
+[2025-07-14 20:13:28] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kisototakijama#0 (826439670161473537)!
+[2025-07-24 16:40:47] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kisototakijama#0 (826439670161473537)!
+[2025-07-24 16:40:47] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kisototakijama#0 (826439670161473537)!
+[2025-07-24 16:40:47] [+] Player (634353843324452864) - kavasaki45#0 was added to the database by kisototakijama#0 (826439670161473537)!
+[2025-10-18 16:37:56] [-] Player (958077120612032612) - kartoshka_ma#0 could not be added to the database by kartoshka_ma#0 (958077120612032612)! Reason: invalid input for query argument $1: 958077120612032612 (value out of int32 range)
