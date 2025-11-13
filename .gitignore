@@ -1,0 +1,30 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+
+# --- IDE / Editors ---
+.vscode/
+.idea/
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+
+# --- Project folders to ignore ---
+legacy/
+backups/
+clusters/
+
+# --- Databases ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Logs ---
+*.log
+
+# --- Environments ---
+.env
+.env.*
+*.json
