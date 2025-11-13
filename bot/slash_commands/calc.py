@@ -1,9 +1,9 @@
 from discord.ext import commands
-from bot.calculator import ceval
+from calculator import ceval
 import discord
 
 
-class Math(commands.Cog):
+class Maths(commands.Cog):
     @commands.slash_command(description="Провести подсчёты")
     async def calculate(self, ctx: discord.ApplicationContext, expr: str) -> None:
         res = ceval(expr)
@@ -11,4 +11,4 @@ class Math(commands.Cog):
         await ctx.respond(embed=embed)
 
 def setup(bot: commands.Bot) -> None:
-    bot.add_cog(Math(bot))
+    bot.add_cog(Maths(bot))

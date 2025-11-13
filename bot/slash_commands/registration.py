@@ -1,115 +1,127 @@
 from discord.ext import commands
+from main import IntegrityError
 from datetime import datetime
 import discord
-import asyncpg  # обязательно для asyncpg
-import bot.database.db as db  # твой модуль с инициализацией пула
+import bot.database.db as db
 
-date_format = "%Y-%m-%d %H:%M:%S"
+date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-main_ideologies = [
-    "Автократия", "Демократия", "Зеленая идеология (экологизм)",
-    "Коммунизм", "Консерватизм", "Либерализм", "Либертарианство",
-    "Национализм", "Социал-демократия", "Социализм", "Фашизм"
-]
-adv_ideologies = ["Гуманизм", "Феминизм", "Маскулизм", "Трансгуманизм", "Экологизм"]
-govs = [
-    "Абсолютная монархия", "Анархия", "Автократия", "Конституционная монархия",
-    "Олигархия", "Парламентская республика", "Племенное правление",
-    "Президентская республика", "Смешанная республика", "Теократия", "Тоталитаризм"
-]
+main_ideologies = ["Автократия", 
+              "Демократия", 
+              "Зеленая идеология (экологизм)", 
+              "Коммунизм",
+              "Консерватизм", 
+              "Либерализм", 
+              "Либертарианство", 
+              "Национализм", 
+              "Социал-демократия", 
+              "Социализм", 
+              "Фашизм"]
+adv_ideologies = ["Гуманизм",
+                  "Феминизм",
+                  "Маскулизм",
+                  "Трансгуманизм",
+                  "Экологизм"]
+
+govs = ["Абсолютная монархия", 
+        "Анархия", 
+        "Автократия",
+        "Конституционная монархия", 
+        "Олигархия", 
+        "Парламентская республика", 
+        "Племенное правление", 
+        "Президентская республика", 
+        "Смешанная республика", 
+        "Теократия",
+        "Тоталитаризм"]
 
 class Registration(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
+        self.conn = db.connection()
+        self.curs = self.conn.cursor()
 
-    def log_entry(self, user: discord.User, author: discord.User, positive: bool, action: str, error: str | None = None) -> None:
-        now = datetime.now().strftime(date_format)
+    def log_entry(
+            self, 
+            user: discord.User, 
+            author: discord.User, 
+            positive: bool, 
+            action: str,  
+            error: str | None = None
+            ) -> str:
         log_action = "added to" if action == "add" else "deleted from"
-        if positive:
-            log_msg = f"\n[{now}] [+] Player ({user.id}) - {user} was {log_action} the database by {author} ({author.id})!"
-        else:
-            log_msg = f"\n[{now}] [-] Player ({user.id}) - {user} could not be {log_action} the database by {author} ({author.id})! Reason: {error}"
-        with open("./bot/logs/regs.txt", "a", encoding="utf-8") as file:
+        log_msg_dict = {True: f"\n[{date}] [+] Player ({user.id}) - {user} was {log_action} the database by {author} ({author.id})!", False: f"\n[{date}] [-] Player ({user.id}) - {user} could not be {log_action} the database by {author} ({author.id})! Reason: {error}"}
+        log_msg = log_msg_dict[positive]
+
+        with open("./logs/regs.txt", "a") as file:
             file.write(log_msg)
             print(log_msg)
 
-    @commands.slash_command(name="registration", description="Регистрация участника сервера")
+    @commands.slash_command(
+            name="registration", 
+            description="Регистрация учасника сервера"
+            )
     @commands.has_permissions(moderate_members=True)
     async def reg(
-        self, ctx: discord.ApplicationContext,
-        user: discord.Option(discord.User, description='Кого вы хотите зарегистрировать?'), 
-        country_name: discord.Option(str, description='Название страны'),
-        leader_name: discord.Option(str, description='ФИО лидера страны'),
-        ideology: discord.Option(str, description='Идеология государства', choices=main_ideologies),
-        government: discord.Option(str, description='Форма правления', choices=govs),
-        gdp: discord.Option(int, description='ВВП'),
-        territories: discord.Option(str, description='Территории страны'),
-        s: discord.Option(int, description='Площадь территории'),
-        population: discord.Option(int, description="Население"),
-        second_ideology: discord.Option(str, description='Дополнительная идеология', choices=adv_ideologies, required=False)
-    ) -> None:
-        embed = discord.Embed(title="Регистрация", color=discord.Color.blurple())
+        self, 
+        ctx: discord.ApplicationContext, 
+        user: discord.Option(discord.User, description='Кого вы хотите зарегистрировать?'), #type: ignore
+        country_name: discord.Option(str, description='Название страны'), #type: ignore
+        leader_name: discord.Option(str, description='ФИО лидера страны'), #type: ignore
+        ideology: discord.Option(str, description='Идеология государства', 
+                                 choices=main_ideologies), #type: ignore
+        government: discord.Option(str, description='Форма правления', 
+                                 choices=govs), #type: ignore
+        gdp: discord.Option(int, description='ВВП'), #type: ignore
+        territories: discord.Option(
+            str, 
+            description='Названия стран/регионов (если таковы взяты отдельно) ' \
+            'на которых расположена страна игрока'), #type: ignore
+        s: discord.Option(int, description='Площадь территории'), #type: ignore
+        population: discord.Option(int, description="Население"), #type: ignore
+        second_ideology: discord.Option(
+            str, 
+            description='Дополнительная идеология (если есть)', 
+            choices=adv_ideologies,
+            required=False
+        )) -> None: #type: ignore
+
         try:
-            conn = await db.connection()
-            async with conn.transaction():
-                await conn.execute(
-                    """
-                    INSERT INTO countries(user_id, country_name, leader_name, ideology, second_ideology, government, gdp, territories, s, population)
-                    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-                    """,
-                    user.id, country_name, leader_name, ideology, second_ideology, government, gdp, territories, s, population
-                )
-            embed = discord.Embed(
-                title="🏳️ | Страна зарегистрирована",
-                description=f"Вы зарегистрировали {user.mention} за {country_name}!",
-                color=0x08000
-            )
+            self.curs.execute("INSERT INTO countries VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (user.id, country_name, leader_name, ideology, second_ideology, government, gdp, territories, s, population))
+            self.conn.commit()
+            embed=discord.Embed(title="🏳️ | Страна зарегистрирована", description=f"Вы зарегистрировали {user.mention} за {country_name}!", color=0x08000)
             self.log_entry(user, ctx.author, True, "add")
-
-        except asyncpg.exceptions.UniqueViolationError as i:
-            self.log_entry(user, ctx.author, False, "add", str(i))
-            embed = discord.Embed(
-                description="**❌ | Пользователь уже зарегистрирован!**",
-                color=0xff0000
-            )
+        except db.sql.IntegrityError as i:
+            self.log_entry(user, ctx.author, False, "add", i)
+            embed=discord.Embed(description="**❌ | Пользователь УЖЕ зарегистрирован!**", color=0xff0000)
         except Exception as e:
-            self.log_entry(user, ctx.author, False, "add", str(e))
-            embed = discord.Embed(
-                description="**❌ | Неизвестная ошибка!**",
-                color=0xff0000
-            )
+            self.log_entry(user, ctx.author, False, "add", e)
+            embed = discord.Embed(description="**❌ | Неизвестная ошибка!**", color=0xff0000)
         finally:
-            await conn.close()
             await ctx.respond(embed=embed)
-
+    
     @commands.slash_command(name="unregistration", description="Снять со страны участника сервера")
     @commands.has_permissions(moderate_members=True)
     async def unreg(
-        self, ctx: discord.ApplicationContext,
-        user: discord.Option(discord.User, description="Кого вы хотите снять?")
-    ) -> None:
+        self, 
+        ctx: discord.ApplicationContext,
+        user: discord.Option(discord.User,
+                            description="Кого вы хотите снять?") #type: ignore
+        ) -> None: 
         try:
-            async with self.bot.db_pool.acquire() as conn:
-                async with conn.transaction():
-                    result = await conn.execute("DELETE FROM countries WHERE user_id=$1", user.id)
-            deleted_count = int(result.split(" ")[1])
-            if deleted_count == 0:
-                raise ValueError("User not found")
+            self.curs.execute("DELETE FROM countries WHERE user_id = ?", (user.id,))
+            self.conn.commit()
 
-            self.log_entry(user, ctx.author, True, "remove")
-            embed = discord.Embed(
-                title="✅ | Игрок снят",
-                description=f"Вы сняли игрока под ником {user} со страны!",
-                color=0x08000
-            )
+            if self.curs.rowcount == 0:
+                raise ValueError("Something went wrong! Check the datebase or request")
+            else:
+                self.log_entry(user, ctx.author, True, "remove")
+            
+            embed=discord.Embed(title="✅ | Игрок снят", description=f"Вы сняли игрока под ником {user} со страны!", color=0x08000)
 
         except Exception as e:
-            self.log_entry(user, ctx.author, False, "remove", str(e))
-            embed = discord.Embed(
-                title="❌ | Игрок не снят",
-                description=f"Игрок под ником {user} не был снят со страны! Возможно, он не зарегистрирован!",
-                color=0xff0000
-            )
+            self.log_entry(user, ctx.author, False, "remove", e)
+            embed=discord.Embed(title="❌ | Игрок не снят", description=f"Игрок под ником {user} не был снят со страны! Возможно, он не зарегистрирован!", color=0xff0000)
         finally:
             await ctx.respond(embed=embed)
 

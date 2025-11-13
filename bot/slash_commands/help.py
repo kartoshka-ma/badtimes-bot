@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 
+
 class Help(commands.Cog):
     @commands.slash_command(description="Список команд бота")
     async def help(self, ctx: discord.ApplicationContext) -> None:

@@ -10,7 +10,7 @@ class BotInfo(commands.Cog):
     
     def load_json(self) -> dict:
         try:
-            with open("./bot/configuration.json", "r") as config:
+            with open("configuration.json", "r") as config:
                 data = json.load(config)
                 versions = {"version": data["version"], 
                             "detail_version": data["detail_version"]}

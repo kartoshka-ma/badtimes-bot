@@ -29,4 +29,3 @@
 [2025-07-24 16:40:47] [+] Player (826439670161473537) - kisototakijama#0 was deleted from the database by kisototakijama#0 (826439670161473537)!
 [2025-07-24 16:40:47] [+] Player (826439670161473537) - kisototakijama#0 was added to the database by kisototakijama#0 (826439670161473537)!
 [2025-07-24 16:40:47] [+] Player (634353843324452864) - kavasaki45#0 was added to the database by kisototakijama#0 (826439670161473537)!
-[2025-10-18 16:37:56] [-] Player (958077120612032612) - kartoshka_ma#0 could not be added to the database by kartoshka_ma#0 (958077120612032612)! Reason: invalid input for query argument $1: 958077120612032612 (value out of int32 range)

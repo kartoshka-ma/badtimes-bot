@@ -3,14 +3,7 @@ import operator
 
 def ceval(expr: str) -> str:
     expr = expr.replace('^', '**')
-    allowed_operators = {
-        ast.Add: operator.add, 
-        ast.Sub: operator.sub, 
-        ast.Mult: operator.mul, 
-        ast.Div: operator.truediv, 
-        ast.Pow: operator.pow,
-        ast.BitXor: operator.pow
-    }
+    allowed_operators = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv, ast.Pow: operator.pow, ast.BitXor: operator.pow}
 
     class Eval(ast.NodeVisitor):
         def visit_BinOp(self, node):
